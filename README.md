@@ -6,4 +6,4 @@ Internal Implementation Dashboard - внутренний веб-модуль
 ## Команда:
 - Георгий - Team Lead
 - Роман - Backend
-- Павел — Frontend
+- Павел - Frontend
