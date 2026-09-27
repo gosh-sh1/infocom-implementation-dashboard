@@ -1,9 +1,10 @@
 # Панель управления внедрением ИС
 
-Internal Implementation Dashboard - внутренний веб-модуль
+Internal Implementation Dashboard — внутренний веб-модуль
 для контроля проектов внедрения информационных систем.
 
-## Команда:
+## Команда
+
 - Георгий - Team Lead
-- Роман - Backend
+- Роман - Backend / QA/DevOps
 - Павел - Frontend
