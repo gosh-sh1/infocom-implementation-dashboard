@@ -1,0 +1,122 @@
+openapi: 3.0.3
+info:
+  title: Infocom Implementation Dashboard API
+  version: 1.0.0
+  description: API-контракт для дашборда проектов внедрения и управления задачами (ЛР №2).
+servers:
+  - url: http://localhost:8080/api
+    description: Локальный сервер разработки
+
+paths:
+  /projects:
+    get:
+      summary: Получить список всех проектов
+      description: Возвращает список проектов внедрения с их текущими статусами и цветовой индикацией.
+      responses:
+        '200':
+          description: Успешный ответ со списком проектов.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Project'
+
+  /tasks:
+    post:
+      summary: Создать новую задачу
+      description: Аналитик-внедренец создает задачу, указывает исполнителя, дедлайн и статус.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskInput'
+      responses:
+        '201':
+          description: Задача успешно создана.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+
+  /projects/{id}/status:
+    get:
+      summary: Получить статус конкретного проекта
+      description: Возвращает актуальный статус проекта с учетом автоматического пересчета по задачам (блокиры, просрочки).
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Актуальный статус проекта.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectStatus'
+
+components:
+  schemas:
+    Project:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        status:
+          type: string
+          enum: [green, yellow, red]
+          description: "green - В сроке, yellow - Есть риски, red - Блокер"
+
+    TaskInput:
+      type: object
+      required:
+        - title
+        - project_id
+        - deadline
+      properties:
+        title:
+          type: string
+        project_id:
+          type: integer
+        assignee:
+          type: string
+        deadline:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum: [todo, in_progress, blocker, done]
+
+    Task:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        project_id:
+          type: integer
+        assignee:
+          type: string
+        deadline:
+          type: string
+          format: date-time
+        status:
+          type: string
+
+    ProjectStatus:
+      type: object
+      properties:
+        project_id:
+          type: integer
+        calculated_status:
+          type: string
+          enum: [green, yellow, red]
+        reason:
+          type: string
+          description: Причина изменения статуса (например, "Есть просроченные задачи" или "Обнаружен блокер")
