@@ -7,30 +7,34 @@ on:
     branches: [ develop, main ]
 
 jobs:
-  lint-and-check:
+  build-and-test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          node-version: '18'
+          python-version: '3.10'
 
-      - name: Install CPP Linter and Cppcheck
+      - name: Install dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install -y cppcheck
+          python -m pip install --upgrade pip
+          pip install flake8
+          pip install -r backend/requirements.txt
 
-      - name: Run C++ Static Analysis (Backend)
+      - name: Lint with flake8 (Python)
         run: |
-          echo "Running Cppcheck for C++ backend files..."
-          cppcheck --enable=warning,style --inline-suppr backend/ || true
+          # Останавливаем сборку, если есть синтаксические ошибки Python
+          flake8 backend/ --count --select=E9,F63,F7,F82 --show-source --statistics
+          # Предупреждения (не останавливают сборку)
+          flake8 backend/ --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
       - name: Check Project Structure
         run: |
           echo "Checking essential files..."
           test -f docs/openapi.yaml && echo "OpenAPI spec present."
           test -f docker-compose.yml && echo "docker-compose present."
+          test -f backend/app/main.py && echo "main.py present."
           echo "CI Pipeline execution finished successfully."
