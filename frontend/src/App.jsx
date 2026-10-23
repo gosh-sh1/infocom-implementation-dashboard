@@ -56,8 +56,9 @@ function App() {
               <input type="text" placeholder="Название задачи" value={taskTitle} onChange={(e) => setTaskTitle(e.target.value)} required style={{ padding: '10px' }} />
               <select value={assignee} onChange={(e) => setAssignee(e.target.value)} required style={{ padding: '10px' }}>
                 <option value="">Выберите исполнителя</option>
-                <option value="user1">Иван Иванов</option>
-                <option value="user2">Петр Петров</option>
+                <option value="user1">Шальнев Георгий</option>
+                <option value="user2">Стрелков Роман</option>
+                <option value="user3">Захаров Павел</option>
               </select>
               <input type="date" value={deadline} onChange={(e) => setDeadline(e.target.value)} style={{ padding: '10px' }} />
               <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
