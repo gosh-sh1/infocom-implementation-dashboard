@@ -72,8 +72,9 @@
  <img width="1688" height="514" alt="image" src="https://github.com/user-attachments/assets/7002beea-7200-47f2-8c17-036fb7b171d7" />
 
 2. **Модальное окно создания новой задачи и назначения ответственного**
-   
-4. **Автоматическое изменение статуса проекта при появлении блокера**
+   <img width="450" height="295" alt="image" src="https://github.com/user-attachments/assets/53982b61-969c-4004-beb4-13a5d62c6673" />
+
+3. **Автоматическое изменение статуса проекта при появлении блокера**
  <img width="1778" height="950" alt="image" src="https://github.com/user-attachments/assets/2bdbfabe-306e-488f-ba97-390dbc3b1f7e" />
 
 ---
